@@ -368,54 +368,31 @@ Text tokens obtained from OCR are **mandatory inputs**.
 
 ---
 
-## 8. PaddleOCR Layout Detection (PP-Structure) – Brief Analysis 
+## 8. PaddleOCR PP-Structure – Document Analysis Pipeline
 
 ### 8.1 Overview
 
-**PaddleOCR** is a production-grade OCR framework that provides an end-to-end ecosystem for document processing, including **text detection, text recognition, layout detection, table parsing, and key information extraction (KIE)**.
+**PaddleOCR PP-Structure** is a comprehensive document intelligence system. For document type detection, it operates as a **feature extraction pipeline**, not a direct classifier. It processes document images to extract explicit structural and textual features, which are then used by a downstream machine learning model (such as an MLP) to perform the final classification.
 
-For document type detection, PaddleOCR is typically used in an **OCR-first pipeline**, where **layout detection models** are leveraged to extract structural information that can be consumed by a downstream classifier.
+### 8.2 Why PP-Structure for Document Type Detection
 
-> **Important clarification:** PaddleOCR does not directly output a document type label; it provides structured features (text and layout) that enable document type classification.
+This pipeline is highly relevant because it provides **explicit, rule-based access to document layout**. It directly identifies the structural components—titles, paragraphs, tables, form fields—that define document categories. This approach is powerful for types where layout is rigid and definitive.
 
----
+For example, a **Government Form** can be detected by a high density of small, aligned text blocks and checkbox regions; a **Bank Statement** is defined by the presence of a structured table with numerical columns. This pipeline excels at converting these visual patterns into countable, measurable features for a classifier.
 
-### 8.2 Layout Detection Models in PaddleOCR
+### 8.3 Strengths
 
-PaddleOCR provides dedicated **layout detection models** (e.g., **PP-Structure / Layout Analysis**) that identify high-level document regions such as:
+*   **Explicit Layout Features:** Provides direct, interpretable data (counts and positions of tables, text blocks, etc.) that serve as strong inputs for a classifier like an MLP.
+*   **Integrated High-Performance OCR:** The built-in OCR engine delivers accurate text from diverse document qualities, offering the option to combine textual semantics with layout features.
+*   **Robustness:** Designed for real-world, noisy scanned documents and supports multiple languages.
+*   **Multi-Task Foundation:** The same extracted features can be used for other downstream tasks like Key Information Extraction (KIE) without reprocessing.
 
-* Titles and headers
-* Text blocks and paragraphs
-* Tables and tabular regions
-* Figures, images, and form-like sections
+### 8.4 Limitations
 
-These models transform raw document images into **explicit, region-level structural representations**, making document organization and layout patterns available for downstream modeling.
-
----
-
-### 8.3 Why PaddleOCR Layout Models for Document Type Detection
-
-Among the various downstream models offered by PaddleOCR, **layout detection models are the most relevant for document type detection**, as they directly align with the objective of **layout- and structure-based classification**.
-
-Layout detection enables:
-
-* Extraction of **structural signals** (region types and spatial distribution)
-* Consistent document representation across diverse formats
-* Improved differentiation of **form-based and layout-heavy documents**
-
-For document types such as bank statements, insurance documents, and government forms, layout structure provides stronger classification cues than raw text alone.
-
----
-
-### 8.4 Strengths
-
-* **Explicit layout modeling** (tables, headers, text regions)
-* Strong OCR accuracy combined with structural parsing
-* Mature and enterprise-proven ecosystem
-* Robust to multi-language documents and noisy scans
-* Easily extensible for additional document AI tasks (KIE, table extraction)
-
----
+*   **Multi-Stage Pipeline Complexity:** Introduces significant system complexity compared to an end-to-end model, requiring orchestration of separate services for layout analysis, OCR, and feature processing before classification.
+*   **High Latency:** The total processing time is the sum of all pipeline stages (layout analysis, OCR, feature engineering, MLP inference), making it slower than a single forward pass of a Vision Transformer.
+*   **Feature Engineering Dependency:** Ultimate performance depends on the manual design of effective features from the extracted layout JSON, requiring domain expertise.
+*   **Error Propagation:** If the layout analysis stage fails to detect a key region (like a table), the error is fixed and will directly limit the classifier's accuracy.
 
 ### 8.5 Limitations
 
@@ -437,10 +414,10 @@ For document types such as bank statements, insurance documents, and government 
 
 | Model / Approach                              | OCR Required      | Primary Signal Used         | Layout Understanding                | Text Semantic Understanding | Expected Accuracy Range | Latency     | Compute Cost  | Pipeline Complexity | Production Risk | Best Fit Use Case                                 |
 | --------------------------------------------- | ----------------- | --------------------------- | ----------------------------------- | --------------------------- | ----------------------- | ----------- | ------------- | ------------------- | --------------- | ------------------------------------------------- |
-| **Swin Transformer**                          | ❌ No              | Visual layout & structure   | ✅ **Strong (learned)**              | ❌ None                      | **88–92%**              | **Low**     | Medium        | **Low**             | **Low**         | Fast, OCR-free layout-based classification        |
-| **DINOv3-7B (SOTA ViT)**                      | ❌ No              | Global visual embeddings    | ⚠️ Moderate                         | ❌ None                      | **89–93%**              | High        | **Very High** | Low                 | Medium          | Research, benchmarking, feature extraction        |
-| **LayoutLM (v2/v3)**                          | ✅ Yes (Mandatory) | Text + layout + image       | ✅ Strong                            | ✅ **Strong**                | **92–96%**              | Medium–High | High          | High                | Medium–High     | Text-sensitive document differentiation           |
-| **PaddleOCR Layout Detection (PP-Structure)** | ✅ Yes (Mandatory) | Explicit regions + OCR text | ✅ **Explicit (rule-based regions)** | ⚠️ Indirect (via OCR)       | **90–94%***             | High        | Medium–High   | **Very High**       | High            | Enterprise document pipelines (forms, statements) |
+| **Swin Transformer**                          |  No              | Visual layout & structure   |  **Strong (learned)**              |  None                      | **88–92%**              | **Low**     | Medium        | **Low**             | **Low**         | Fast, OCR-free layout-based classification        |
+| **DINOv3-7B (SOTA ViT)**                      |  No              | Global visual embeddings    |  Moderate                         |  None                      | **89–93%**              | High        | **Very High** | Low                 | Medium          | Research, benchmarking, feature extraction        |
+| **LayoutLM (v2/v3)**                          |  Yes (Mandatory) | Text + layout + image       |  Strong                            |  **Strong**                | **92–96%**              | Medium–High | High          | High                | Medium–High     | Text-sensitive document differentiation           |
+| **PaddleOCR Layout Detection (PP-Structure)** |  Yes (Mandatory) | Explicit regions + OCR text |  **Explicit (rule-based regions)** |  Indirect (via OCR)       | **90–94%***             | High        | Medium–High   | **Very High**       | High            | Enterprise document pipelines (forms, statements) |
 
 *Accuracy assumes layout features are consumed by a downstream classifier (ML/DL).
 
@@ -617,10 +594,10 @@ For document types such as bank statements, insurance documents, and government 
 
 | Model                | Overall Position               |
 | -------------------- | ------------------------------ |
-| **Swin Transformer** | ✅ Best primary model           |
-| **DINOv3-7B**        | ⚠️ Research / benchmarking     |
-| **LayoutLM**         | ✅ High-accuracy fallback       |
-| **PaddleOCR Layout** | ✅ Enterprise & form-heavy docs |
+| **Swin Transformer** |  Best primary model           |
+| **DINOv3-7B**        |  Research / benchmarking     |
+| **LayoutLM**         |  High-accuracy fallback       |
+| **PaddleOCR Layout** |  Enterprise & form-heavy docs |
 
 ---
 
