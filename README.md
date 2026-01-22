@@ -8,7 +8,6 @@ The classification is primarily based on visual layout, structural patterns, and
 
 ---
 
-
 ## 2. Why Multiple Model Families Are Evaluated
 
 Document Type Detection for scanned documents is a **non-trivial classification problem** due to the high variability in document appearance, structure, and content. Although the end goal is a single classification label per document page, the **signals required to make that decision differ significantly across document types**.
@@ -161,3 +160,336 @@ Key considerations include:
 * Suitability for real-time or near-real-time workflows
 
 This criterion ensures that selected models are not only accurate but also **economically and operationally viable** at scale.
+
+---
+
+## 4. Model Architecture Categories for Document Type Detection
+
+Document type detection from scanned images can be approached using different architectural paradigms, each emphasizing a distinct source of information such as **visual layout**, **textual semantics**, or **OCR-driven pipelines**.
+To ensure a structured and unbiased comparison, the evaluated models are grouped into three high-level architecture categories based on their **core design philosophy and input dependencies**.
+
+This categorization helps clarify **what type of information each model relies on** and **why their strengths and limitations differ** for the given problem.
+
+---
+
+### 4.1 Vision-Only Models
+
+**Representative Models:**
+
+* Swin Transformer
+* State-of-the-art Vision Transformers (ViT-Huge, DINOv2, DINOv3, EVA)
+
+**Architectural Principle:**
+Vision-only models treat document pages purely as images and learn discriminative features from **visual layout, spatial structure, and appearance patterns**, without relying on extracted text.
+
+**Core Idea:**
+
+> Learn document structure and layout patterns directly from pixel-level visual information.
+
+**Relevance to Document Type Detection:**
+These models are well-suited for documents where **layout and structural organization** (such as headers, columns, tables, spacing, and alignment) are strong indicators of document type. For example, invoices and resumes often exhibit visually distinctive formats that can be captured without textual understanding.
+
+**Key Characteristics:**
+
+* No OCR dependency
+* Simplified preprocessing pipeline
+* Strong robustness to OCR noise
+* Limited semantic understanding of text content
+
+Vision-only models align closely with the stated objective of **layout- and structure-based classification**, making them strong baseline and primary candidates for this task.
+
+---
+
+### 4.2 Multimodal Layout-Aware Models
+
+**Representative Models:**
+
+* LayoutLM family (LayoutLM, LayoutLMv2, LayoutLMv3)
+
+**Architectural Principle:**
+Multimodal layout-aware models jointly encode **textual content, spatial layout (bounding boxes), and visual features** within a single transformer architecture.
+
+**Core Idea:**
+
+> Jointly model text, layout coordinates, and visual context to understand document structure and semantics.
+
+**Relevance to Document Type Detection:**
+These models are particularly effective when **textual semantics are required to distinguish between visually similar document types**, such as bank statements versus insurance or government forms. They leverage OCR outputs to provide deeper contextual understanding beyond visual layout alone.
+
+**Key Characteristics:**
+
+* Mandatory OCR dependency
+* Strong semantic and layout understanding
+* Higher preprocessing and inference complexity
+* Increased sensitivity to OCR quality
+
+While powerful, these models introduce additional pipeline complexity and are best suited for scenarios where layout cues alone are insufficient.
+
+---
+
+### 4.3 OCR-Centric Pipelines
+
+**Representative Systems:**
+
+* PaddleOCR with downstream classification or layout models
+
+**Architectural Principle:**
+OCR-centric pipelines follow a modular approach where **text extraction is performed first**, and document understanding is handled in subsequent stages using extracted text, layout information, or structured representations.
+
+**Core Idea:**
+
+> OCR-first, intelligence-later pipeline for document understanding.
+
+**Relevance to Document Type Detection:**
+This approach is commonly adopted in **enterprise-scale document processing systems** where OCR is already a mandatory component for downstream tasks such as key-value extraction, table parsing, or compliance processing.
+
+**Key Characteristics:**
+
+* Strong OCR accuracy and language support
+* Highly modular and extensible
+* Multi-stage pipeline with higher latency
+* Error propagation from OCR to classification
+
+OCR-centric pipelines offer flexibility and industrial maturity but come with increased system complexity compared to end-to-end vision-based approaches.
+
+---
+
+## 5. Swin Transformer – Brief Analysis
+
+### 5.1 Overview
+
+Swin Transformer is a **hierarchical Vision Transformer** that uses **shifted window attention** to capture both local and global visual patterns efficiently. Unlike standard ViT models, it is designed to better preserve **spatial structure**, making it suitable for document image analysis.
+
+---
+
+### 5.2 Why Swin Transformer for Document Type Detection
+
+Document type detection in scanned images largely depends on **layout and structural cues** such as:
+
+* Page organization
+* Section alignment
+* Tables, headers, and spacing
+
+Swin Transformer can learn these patterns directly from images **without relying on OCR**, aligning well with the objective of **layout-based classification**.
+
+---
+
+### 5.3 Strengths
+
+* **OCR-free pipeline**, reducing complexity and error propagation
+* Strong understanding of **document layout and structure**
+* Handles **multi-column layouts and tables** effectively
+* Better **accuracy–compute trade-off** compared to very large ViT models
+* Suitable for **production-scale inference**
+
+---
+
+### 5.4 Limitations
+
+* No understanding of **text semantics**
+* May struggle with documents that are **visually similar but semantically different**
+* Limited performance when classification depends on **keywords or textual meaning**
+
+---
+
+## 6. SOTA Vision Transformers (DINOv3-7B) – Brief Analysis
+
+### 6.1 Overview
+
+**DINOv3-7B** is a state-of-the-art, large-scale **self-supervised Vision Transformer** trained on massive image corpora. It learns highly rich and general-purpose visual representations using **global self-attention**, without requiring labeled data during pretraining.
+
+---
+
+### 6.2 Why DINOv3-7B for Document Type Detection
+
+DINOv3-7B can serve as a powerful **visual backbone** for document classification by capturing:
+
+* Overall page structure
+* Global layout consistency
+* Visual style and formatting patterns
+
+Its strong pretraining allows effective transfer to document images, even with **limited labeled datasets**.
+
+---
+
+### 6.3 Strengths
+
+* **Very strong visual feature representations**
+* OCR-free and simple input pipeline
+* Excellent generalization across document styles
+* Performs well as a **feature extractor** or frozen backbone
+* Suitable for low-data scenarios
+
+---
+
+### 6.4 Limitations
+
+* **Very high compute and memory requirements** (7B parameters)
+* No explicit modeling of document layout hierarchy
+* No understanding of textual semantics
+* Often **overkill** for structured document classification tasks
+* Less practical for latency-sensitive production systems
+
+---
+
+## 7. LayoutLM Family – Brief Analysis
+
+### 7.1 Overview
+
+The **LayoutLM family (LayoutLM, LayoutLMv2, LayoutLMv3)** consists of **multimodal transformer models** designed specifically for document understanding tasks. These models jointly process **text tokens, spatial layout (bounding boxes), and visual features** to capture both document structure and semantic meaning.
+
+---
+
+### 7.2 Why LayoutLM for Document Type Detection
+
+LayoutLM is particularly relevant when document types are **visually similar but semantically different**. By combining OCR-extracted text with layout information, the model can distinguish documents based on **content semantics aligned with spatial structure**.
+
+**Important:** LayoutLM **cannot operate on layout alone**.
+Text tokens obtained from OCR are **mandatory inputs**.
+
+---
+
+### 7.3 Strengths
+
+* Strong **joint understanding of text, layout, and visual context**
+* Effective for **semantically driven document classification**
+* Proven performance in document AI benchmarks
+* Well-suited for complex documents such as policies and forms
+
+---
+
+### 7.4 Limitations
+
+* **Mandatory OCR dependency**, increasing pipeline complexity
+* Performance highly sensitive to **OCR quality**
+* Higher inference latency and compute cost
+* Overkill for visually distinctive document types
+* More difficult to deploy and maintain in production
+
+---
+
+## 8. PaddleOCR Layout Detection (PP-Structure) – Brief Analysis 
+
+### 8.1 Overview
+
+**PaddleOCR** is a production-grade OCR framework that provides an end-to-end ecosystem for document processing, including **text detection, text recognition, layout detection, table parsing, and key information extraction (KIE)**.
+
+For document type detection, PaddleOCR is typically used in an **OCR-first pipeline**, where **layout detection models** are leveraged to extract structural information that can be consumed by a downstream classifier.
+
+> **Important clarification:** PaddleOCR does not directly output a document type label; it provides structured features (text and layout) that enable document type classification.
+
+---
+
+### 8.2 Layout Detection Models in PaddleOCR
+
+PaddleOCR provides dedicated **layout detection models** (e.g., **PP-Structure / Layout Analysis**) that identify high-level document regions such as:
+
+* Titles and headers
+* Text blocks and paragraphs
+* Tables and tabular regions
+* Figures, images, and form-like sections
+
+These models transform raw document images into **explicit, region-level structural representations**, making document organization and layout patterns available for downstream modeling.
+
+---
+
+### 8.3 Why PaddleOCR Layout Models for Document Type Detection
+
+Among the various downstream models offered by PaddleOCR, **layout detection models are the most relevant for document type detection**, as they directly align with the objective of **layout- and structure-based classification**.
+
+Layout detection enables:
+
+* Extraction of **structural signals** (region types and spatial distribution)
+* Consistent document representation across diverse formats
+* Improved differentiation of **form-based and layout-heavy documents**
+
+For document types such as bank statements, insurance documents, and government forms, layout structure provides stronger classification cues than raw text alone.
+
+---
+
+### 8.4 Strengths
+
+* **Explicit layout modeling** (tables, headers, text regions)
+* Strong OCR accuracy combined with structural parsing
+* Mature and enterprise-proven ecosystem
+* Robust to multi-language documents and noisy scans
+* Easily extensible for additional document AI tasks (KIE, table extraction)
+
+---
+
+### 8.5 Limitations
+
+* **Multi-stage pipeline**, increasing system complexity
+* Strong dependency on OCR and layout model quality
+* Error propagation across pipeline stages
+* Higher inference latency compared to end-to-end vision models
+* Increased engineering and operational overhead
+
+---
+
+# 9. Comparative Summary – Model Selection at a Glance (Revised)
+
+> **Goal:** Enable quick, high-confidence decision-making for **Document Type Detection based on layout and structure**, considering accuracy, cost, risk, and production feasibility.
+
+---
+
+## 9.1 High-Level Comparison Table (Updated & Expanded)
+
+| Model / Approach                              | OCR Required      | Primary Signal Used         | Layout Understanding                | Text Semantic Understanding | Expected Accuracy Range | Latency     | Compute Cost  | Pipeline Complexity | Production Risk | Best Fit Use Case                                 |
+| --------------------------------------------- | ----------------- | --------------------------- | ----------------------------------- | --------------------------- | ----------------------- | ----------- | ------------- | ------------------- | --------------- | ------------------------------------------------- |
+| **Swin Transformer**                          | ❌ No              | Visual layout & structure   | ✅ **Strong (learned)**              | ❌ None                      | **88–92%**              | **Low**     | Medium        | **Low**             | **Low**         | Fast, OCR-free layout-based classification        |
+| **DINOv3-7B (SOTA ViT)**                      | ❌ No              | Global visual embeddings    | ⚠️ Moderate                         | ❌ None                      | **89–93%**              | High        | **Very High** | Low                 | Medium          | Research, benchmarking, feature extraction        |
+| **LayoutLM (v2/v3)**                          | ✅ Yes (Mandatory) | Text + layout + image       | ✅ Strong                            | ✅ **Strong**                | **92–96%**              | Medium–High | High          | High                | Medium–High     | Text-sensitive document differentiation           |
+| **PaddleOCR Layout Detection (PP-Structure)** | ✅ Yes (Mandatory) | Explicit regions + OCR text | ✅ **Explicit (rule-based regions)** | ⚠️ Indirect (via OCR)       | **90–94%***             | High        | Medium–High   | **Very High**       | High            | Enterprise document pipelines (forms, statements) |
+
+*Accuracy assumes layout features are consumed by a downstream classifier (ML/DL).
+
+---
+
+## 9.2 What This Table Clearly Shows (Manager Interpretation)
+
+* **Highest accuracy** is achieved by **text-aware pipelines** (LayoutLM, PaddleOCR).
+* **Lowest risk and fastest deployment** comes from **Swin Transformer**.
+* **DINOv3-7B does not provide proportional gains** relative to its compute cost.
+* **PaddleOCR layout detection is not a classifier**, but a **feature generator**.
+
+---
+
+## 9.3 Document-Type–Wise Best Model (Quick Decision View)
+
+| Document Type          | Best Model                  | Why                                  |
+| ---------------------- | --------------------------- | ------------------------------------ |
+| **Invoice**            | Swin / PaddleOCR Layout     | Tables + strong visual structure     |
+| **Resume**             | Swin / DINOv3               | Highly distinctive visual formatting |
+| **Bank Statement**     | LayoutLM / PaddleOCR Layout | Text + structured layout required    |
+| **Insurance / Policy** | LayoutLM                    | Semantic differentiation critical    |
+| **Government Form**    | PaddleOCR Layout            | Explicit form and region structure   |
+
+---
+
+## 9.4 Accuracy vs Complexity vs Risk (Executive Lens)
+
+| Model                | Accuracy         | Complexity    | Risk    | Overall Value |
+| -------------------- | ---------------- | ------------- | ------- | ------------- |
+| **Swin Transformer** | High (~90%)      | **Low**       | **Low** | ⭐⭐⭐⭐⭐         |
+| **LayoutLM**         | Very High (~95%) | High          | Medium  | ⭐⭐⭐⭐☆         |
+| **PaddleOCR Layout** | High (~92%)      | **Very High** | High    | ⭐⭐⭐☆☆         |
+| **DINOv3-7B**        | High (~91%)      | Low           | Medium  | ⭐⭐☆☆☆         |
+
+---
+
+## 9.5 Final Executive Ranking (Numeric & Clear)
+
+1. **Swin Transformer**
+   → Best balance of **accuracy, latency, simplicity, and scalability**
+
+2. **LayoutLM (v2/v3)**
+   → Best for **semantically similar, text-heavy documents**
+
+3. **PaddleOCR Layout Detection (PP-Structure)**
+   → Best for **enterprise pipelines**, not lightweight classification
+
+4. **DINOv3-7B**
+   → Technically strong, **not cost-effective for production**
+
+---
