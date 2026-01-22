@@ -375,16 +375,10 @@ For example, a **Government Form** can be detected by a high density of small, a
 ### 8.3 Strengths
 
 *   **Explicit Layout Features:** Provides direct, interpretable data (counts and positions of tables, text blocks, etc.) that serve as strong inputs for a classifier like an MLP.
-*   **Integrated High-Performance OCR:** The built-in OCR engine delivers accurate text from diverse document qualities, offering the option to combine textual semantics with layout features.
-*   **Robustness:** Designed for real-world, noisy scanned documents and supports multiple languages.
-*   **Multi-Task Foundation:** The same extracted features can be used for other downstream tasks like Key Information Extraction (KIE) without reprocessing.
+*   Integrated High-Performance OCR:** The built-in OCR engine delivers accurate text from diverse document qualities, offering the option to combine textual semantics with layout features.
+*   Robustness: Designed for real-world, noisy scanned documents and supports multiple languages.
+*   Multi-Task Foundation: The same extracted features can be used for other downstream tasks like Key Information Extraction (KIE) without reprocessing.
 
-### 8.4 Limitations
-
-*   **Multi-Stage Pipeline Complexity:** Introduces significant system complexity compared to an end-to-end model, requiring orchestration of separate services for layout analysis, OCR, and feature processing before classification.
-*   **High Latency:** The total processing time is the sum of all pipeline stages (layout analysis, OCR, feature engineering, MLP inference), making it slower than a single forward pass of a Vision Transformer.
-*   **Feature Engineering Dependency:** Ultimate performance depends on the manual design of effective features from the extracted layout JSON, requiring domain expertise.
-*   **Error Propagation:** If the layout analysis stage fails to detect a key region (like a table), the error is fixed and will directly limit the classifier's accuracy.
 
 ### 8.5 Limitations
 
