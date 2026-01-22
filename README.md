@@ -74,14 +74,6 @@ Therefore, a comparative evaluation across Swin Transformer, SOTA Vision Transfo
 * Understand failure modes
 * Support an informed and defensible architectural decision
 
-
----
-
-Perfect — below is a **clean, manager-ready “Section 3: Evaluation Criteria”**, written **specifically for your problem statement**
-(**Document Type Detection using Vision Transformers, layout & structure focused**).
-
-You can **paste this directly** into your report.
-
 ---
 
 ## 3. Evaluation Criteria
