@@ -469,12 +469,12 @@ For document types such as bank statements, insurance documents, and government 
 
 ## 9.4 Accuracy vs Complexity vs Risk (Executive Lens)
 
-| Model                | Accuracy         | Complexity    | Risk    | Overall Value |
-| -------------------- | ---------------- | ------------- | ------- | ------------- |
-| **Swin Transformer** | High (~90%)      | **Low**       | **Low** | ⭐⭐⭐⭐⭐         |
-| **LayoutLM**         | Very High (~95%) | High          | Medium  | ⭐⭐⭐⭐☆         |
-| **PaddleOCR Layout** | High (~92%)      | **Very High** | High    | ⭐⭐⭐☆☆         |
-| **DINOv3-7B**        | High (~91%)      | Low           | Medium  | ⭐⭐☆☆☆         |
+| Model                  | Accuracy               | Latency     | Cost          | Complexity    | Net Value |
+| ---------------------- | ---------------------- | ----------- | ------------- | ------------- | --------- |
+| **Swin Transformer**   | High (88–92%)          | **Low**     | **Medium**    | **Low**       | ⭐⭐⭐⭐☆     |
+| **DINOv3-7B**          | High (89–93%)          | High        | **Very High** | Low           | ⭐⭐☆☆☆     |
+| **LayoutLM**           | **Very High (92–96%)** | Medium–High | High          | High          | ⭐⭐⭐⭐☆     |
+| **PaddleOCR + Layout** | **Highest (93–97%)**   | High        | Medium–High   | **Very High** | ⭐⭐⭐⭐☆     |
 
 ---
 
@@ -491,5 +491,238 @@ For document types such as bank statements, insurance documents, and government 
 
 4. **DINOv3-7B**
    → Technically strong, **not cost-effective for production**
+
+---
+
+# 10. SWOT Analysis – Document Type Detection Models
+
+---
+
+## 10.1 Swin Transformer (Vision-Only Model)
+
+### **Strengths**
+
+* OCR-free and **simple pipeline**
+* Strong understanding of **layout and structure**
+* **Low latency** and production-friendly
+* Good accuracy for visually distinctive documents
+* Easy to scale and maintain
+
+### **Weaknesses**
+
+* No **text semantic understanding**
+* Struggles with visually similar but semantically different documents
+* Limited performance on text-heavy documents
+
+### **Opportunities**
+
+* Can be combined with OCR-based models in a **hybrid approach**
+* Well-suited as a **primary classifier**
+* Potential improvement with domain-specific fine-tuning
+
+### **Threats**
+
+* Multimodal models may outperform it on complex documents
+* Accuracy ceiling limited without text signals
+
+---
+
+## 10.2 SOTA Vision Transformers (DINOv3-7B)
+
+### **Strengths**
+
+* Extremely strong **visual representations**
+* Excellent generalization due to large-scale pretraining
+* OCR-free and minimal preprocessing
+* Performs well with limited labeled data
+
+### **Weaknesses**
+
+* **Very high compute and memory cost**
+* High inference latency
+* No explicit layout hierarchy modeling
+* Overkill for document classification tasks
+
+### **Opportunities**
+
+* Useful as a **feature extractor** or research benchmark
+* Can support future multi-task vision pipelines
+
+### **Threats**
+
+* Not cost-effective for production
+* Lighter models (e.g., Swin) provide similar accuracy with less overhead
+
+---
+
+## 10.3 LayoutLM Family (Multimodal Models)
+
+### **Strengths**
+
+* Strong **joint understanding of text and layout**
+* High accuracy for semantically similar document types
+* Proven success in document AI benchmarks
+* Effective for text-heavy documents
+
+### **Weaknesses**
+
+* **Mandatory OCR dependency**
+* Complex preprocessing pipeline
+* Higher inference latency
+* Sensitive to OCR quality
+
+### **Opportunities**
+
+* Ideal as a **secondary or fallback model**
+* Can support multiple downstream document understanding tasks
+* Strong candidate for compliance-driven use cases
+
+### **Threats**
+
+* OCR errors directly impact accuracy
+* Pipeline complexity increases maintenance cost
+
+---
+
+## 10.4 PaddleOCR Layout Detection (PP-Structure)
+
+### **Strengths**
+
+* **Explicit layout modeling** (tables, text blocks, forms)
+* Enterprise-grade OCR accuracy
+* Strong support for multi-language and noisy documents
+* Well-suited for form-based and structured documents
+
+### **Weaknesses**
+
+* **Not a direct classifier** (requires downstream model)
+* Multi-stage pipeline increases complexity
+* Higher latency due to OCR + layout stages
+* Error propagation across components
+
+### **Opportunities**
+
+* Strong fit for **enterprise document pipelines**
+* Can be extended to KIE, table extraction, and compliance tasks
+* Useful as a **fallback for complex documents**
+
+### **Threats**
+
+* Over-engineering for simple classification tasks
+* Vision-only models may replace it for lightweight use cases
+
+---
+
+## 10.5 SWOT Summary (Executive View)
+
+| Model                | Overall Position               |
+| -------------------- | ------------------------------ |
+| **Swin Transformer** | ✅ Best primary model           |
+| **DINOv3-7B**        | ⚠️ Research / benchmarking     |
+| **LayoutLM**         | ✅ High-accuracy fallback       |
+| **PaddleOCR Layout** | ✅ Enterprise & form-heavy docs |
+
+---
+
+## 11. Final Recommendation and Decision
+
+### 11.1 Key Findings
+
+* **No single model is optimal for all document types** in this problem.
+* Document type detection based on scanned images relies on **two different signals**:
+
+  * **Visual layout and structure** (headers, tables, spacing, form structure)
+  * **Textual semantics** (keywords, domain-specific language)
+* Models that excel at layout are **simpler and faster**, while models that leverage text achieve **higher accuracy at the cost of complexity**.
+* OCR-based pipelines (LayoutLM, PaddleOCR) introduce **additional latency, cost, and operational risk**, but are necessary for text-heavy and semantically similar documents.
+
+---
+
+### 11.2 Model Suitability Summary (Honest Assessment)
+
+* **Swin Transformer**
+
+  * Best balance of **accuracy (~88–92%)**, latency, and simplicity
+  * Performs strongly for visually distinctive documents (Invoice, Resume)
+  * Lowest production risk
+
+* **DINOv3-7B**
+
+  * Technically strong but **not cost-effective**
+  * Accuracy gains do not justify compute and latency overhead
+  * Better suited for research or feature extraction, not production
+
+* **LayoutLM**
+
+  * Highest accuracy for **text-driven differentiation (~92–96%)**
+  * Mandatory OCR dependency increases pipeline complexity
+  * Best used selectively, not as the primary model
+
+* **PaddleOCR Layout Detection (PP-Structure)**
+
+  * Best for **form-heavy, enterprise documents**
+  * Provides layout features, **not direct classification**
+  * High operational overhead for a pure classification task
+
+---
+
+### 11.3 Recommended Strategy (Clear Decision)
+
+> ### **Recommended: Two-Stage Hybrid Approach**
+
+#### Stage 1 – Primary Classification (Default Path)
+
+* **Model:** Swin Transformer
+* **Purpose:** Fast, OCR-free document type detection using layout and structure
+* **Why:**
+
+  * Lowest latency
+  * Simplest pipeline
+  * Strong accuracy for majority of document types
+  * Scales well in production
+
+This stage handles **most documents (~80–85%)** efficiently.
+
+---
+
+#### Stage 2 – Secondary Classification (Selective Fallback)
+
+* **Model:** LayoutLM *or* PaddleOCR Layout + downstream classifier
+
+* **Triggered when:**
+
+  * Stage 1 confidence is low
+  * Documents are text-heavy or semantically ambiguous
+
+* **Why:**
+
+  * Text and layout semantics improve accuracy
+  * Necessary for Bank Statements, Insurance documents, and Government Forms
+
+This stage prioritizes **accuracy over speed**, but is used **only when required**.
+
+---
+
+### 11.4 Why Not a Pure OCR-First Approach?
+
+A pure OCR-first strategy (PaddleOCR or LayoutLM for all documents):
+
+* Increases **latency and infrastructure cost**
+* Introduces **error propagation from OCR**
+* Is **over-engineered** for visually distinctive documents
+
+Therefore, OCR-based models should **not be the default entry point** for document type detection.
+
+---
+
+### 11.5 Why Not Pure Vision Only?
+
+A vision-only approach alone:
+
+* Works well for invoices and resumes
+* Struggles with **visually similar but semantically different documents**
+* Has an accuracy ceiling without text signals
+
+Hence, vision-only models are **necessary but not sufficient** for all cases.
 
 ---
