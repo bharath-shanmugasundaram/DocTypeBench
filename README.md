@@ -629,11 +629,11 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-### 11.3 Recommended Strategy (Clear Decision)
+### 11.3 Recommended Strategy 
 
 > ### **Recommended: Two-Stage Hybrid Approach**
 
-#### Stage 1 – Primary Classification (Default Path)
+#### Stage 1 – Primary Classification
 
 * **Model:** Swin Transformer
 * **Purpose:** Fast, OCR-free document type detection using layout and structure
@@ -648,7 +648,7 @@ This stage handles **most documents (~80–85%)** efficiently.
 
 ---
 
-#### Stage 2 – Secondary Classification (Selective Fallback)
+#### Stage 2 – Secondary Classification 
 
 * **Model:** LayoutLM *or* PaddleOCR Layout + downstream classifier
 
