@@ -12,7 +12,7 @@
 
 ---
 
-## 1. <h1 style="colour:#0000ff;">Objective</h1>
+## 1. Objective
 
 The objective of this analysis is to design an Ai-based document type detection system that classifies scanned document pages into predefined document categories such as Invoice, Resume, Bank Statement, Insurance/Policy Document, and Government Forms.
 
