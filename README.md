@@ -1,4 +1,4 @@
-# DocTypeBench
+# Document Classification Models Analysis
 
 # Table of Contents
 
