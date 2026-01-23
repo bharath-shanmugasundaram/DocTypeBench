@@ -76,7 +76,7 @@ Therefore, a comparative evaluation across Swin Transformer, SOTA Vision Transfo
 
 ---
 
-## 3. Evaluation Criteria for Each Model
+## 3. Model Characteristics for Evaluation 
 
 To ensure a fair and objective comparison across different model families, a unified set of evaluation criteria is defined. These criteria are designed to reflect both the **technical requirements of document type detection** and the **practical constraints of deploying such a system in production**.
 
