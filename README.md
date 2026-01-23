@@ -2,14 +2,15 @@
 
 # Table of Contents
 
-1. [**DocTypeBench**](#doctypebench)
-2. [**1. Comparative Analysis of Models for Document Type Classification**](#1-comparative-analysis-of-models-for-document-type-classification)
-3. [**2. Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
-4. [**3. Characteristics Analysis of Various Model**](#3-characteristics-analysis-of-various-model)
-5. [**4. Analysis of Various Architectural Model for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
-6. [**5. Brief Analysis of Swin Transformer, DINOv3-7B, LayoutLM, PaddleOCR PP-Structure**](#5-brief-analysis-of-swin-transformer-dinov3-7b-layoutlm-paddleocr-pp-structure)
-7. [**6. Analysis Findings of Various Models**](#6-analysis-findings-of-various-models)
-8. [**7 Conculsion and Recommendation**](#7-conculsion-and-recommendation)
+1. [**1. Comparative Analysis of Models for Document Type Classification**](#1-comparative-analysis-of-models-for-document-type-classification)
+2. [**2. Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
+3. [**3. Characteristics Analysis of Various Model**](#3-characteristics-analysis-of-various-model)
+4. [**4. Analysis of Various Architectural Model for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
+5. [**5. Brief Analysis of Swin Transformer, DINOv3-7B, LayoutLM, PaddleOCR PP-Structure**](#5-brief-analysis-of-swin-transformer-dinov3-7b-layoutlm-paddleocr-pp-structure)
+6. [**6. Analysis Findings of Various Models**](#6-analysis-findings-of-various-models)
+7. [**7 Conculsion and Recommendation**](#7-conculsion-and-recommendation)
+
+---
 
 ## 1. Comparative Analysis of Models for Document Type Classification
 
