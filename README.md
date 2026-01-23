@@ -1,6 +1,6 @@
 # Document Classification Models Analysis
 
-# Table of Contents
+## Table of Contents
 
 1. [**Objective**](#1-Objective)
 2. [**Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
