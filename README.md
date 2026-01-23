@@ -286,7 +286,7 @@ Swin Transformer can learn these patterns directly from images **without relying
 
 ---
 
-### 5.2. SOTA Vision Transformers (DINOv3-7B) – Brief Analysis
+### 5.2. DINOv3-7B
 
 #### 5.2.1 Overview
 
@@ -326,7 +326,7 @@ Its strong pretraining allows effective transfer to document images, even with *
 
 ---
 
-### 5.3 LayoutLM Family – Brief Analysis
+### 5.3 LayoutLM Family
 
 #### 5.3.1 Overview
 
@@ -392,13 +392,13 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-# 9. Comparative Summary – Model Selection at a Glance (Revised)
+# 6.  Analysis Findings of Various Models
 
 > **Goal:** Enable quick, high-confidence decision-making for **Document Type Detection based on layout and structure**, considering accuracy, cost, risk, and production feasibility.
 
 ---
 
-## 9.1 High-Level Comparison Table (Updated & Expanded)
+## 6.1 High-Level Comparison Table
 
 | Model / Approach                              | OCR Required      | Primary Signal Used         | Layout Understanding                | Text Semantic Understanding | Expected Accuracy Range | Latency     | Compute Cost  | Pipeline Complexity | Production Risk | Best Fit Use Case                                 |
 | --------------------------------------------- | ----------------- | --------------------------- | ----------------------------------- | --------------------------- | ----------------------- | ----------- | ------------- | ------------------- | --------------- | ------------------------------------------------- |
@@ -411,7 +411,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-## 9.2 What This Table Clearly Shows (Manager Interpretation)
+## 6.2 Interpetitaion of the Comparession Table
 
 * **Highest accuracy** is achieved by **text-aware pipelines** (LayoutLM, PaddleOCR).
 * **Lowest risk and fastest deployment** comes from **Swin Transformer**.
@@ -420,7 +420,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-## 9.3 Document-Type–Wise Best Model (Quick Decision View)
+## 6.3 Recommended Models for Varoius Document types
 
 | Document Type          | Best Model                  | Why                                  |
 | ---------------------- | --------------------------- | ------------------------------------ |
@@ -432,7 +432,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-## 9.4 Accuracy vs Complexity vs Risk (Executive Lens)
+## 6.4 Accuracy vs Complexity vs Risk of each model
 
 | Model                  | Accuracy               | Latency     | Cost          | Complexity    | Net Value |
 | ---------------------- | ---------------------- | ----------- | ------------- | ------------- | --------- |
@@ -443,8 +443,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-## 9.5 Final Executive Ranking (Numeric & Clear)
-
+## 9.5 Each Model Strength 
 1. **Swin Transformer**
    → Best balance of **accuracy, latency, simplicity, and scalability**
 
@@ -589,9 +588,9 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-## 11. Final Recommendation and Decision
+## 7 Conculsion and Recommendation
 
-### 11.1 Key Findings
+### 7.1 Key Findings
 
 * **No single model is optimal for all document types** in this problem.
 * Document type detection based on scanned images relies on **two different signals**:
@@ -603,7 +602,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-### 11.2 Model Suitability Summary (Honest Assessment)
+### 7.2 Model Suitability Summary (Honest Assessment)
 
 * **Swin Transformer**
 
@@ -631,7 +630,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-### 11.3 Recommended Strategy 
+### 7.3 Recommended Strategy 
 
 > ### **Recommended: Two-Stage Hybrid Approach**
 
@@ -668,7 +667,7 @@ This stage prioritizes **accuracy over speed**, but is used **only when required
 
 ---
 
-### 11.4 Why Not a Pure OCR-First Approach?
+### 7.4 Why Not a Pure OCR-First Approach?
 
 A pure OCR-first strategy (PaddleOCR or LayoutLM for all documents):
 
@@ -680,7 +679,7 @@ Therefore, OCR-based models should **not be the default entry point** for docume
 
 ---
 
-### 11.5 Why Not Pure Vision Only?
+### 7.5 Why Not Pure Vision Only?
 
 A vision-only approach alone:
 
