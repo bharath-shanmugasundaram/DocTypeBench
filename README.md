@@ -5,7 +5,7 @@
 1. [**Objective**](#1-Objective)
 2. [**Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
 3. [**Characteristics Analysis of Various Models**](#3-characteristics-analysis-of-various-model)
-4. [**Analysis of Various Architectural Models for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
+4. [**Analysis of Various Model's Architecure for Document Type Detection**](#4-analysis-of-various-model's-Architecure-for-document-type-detection)
 5. [**Brief Analysis of Swin Transformer, DINOv3-7B, LayoutLM, PaddleOCR PP-Structure**](#5-brief-analysis-of-swin-transformer-dinov3-7b-layoutlm-paddleocr-pp-structure)
 6. [**Analysis Findings of Various Models**](#6-analysis-findings-of-various-models)
 7. [**Conculsion and Recommendation**](#7-conculsion-and-recommendation)
@@ -167,7 +167,7 @@ This criterion ensures that selected models are not only accurate but also **eco
 
 ---
 
-## 4. Analysis of Various Architectural Models for Document Type Detection
+## 4. Analysis of Various Model's Architecure for Document Type Detection
 
 Document type detection from scanned images can be approached using different architectural paradigms, each emphasizing a distinct source of information such as **visual layout**, **textual semantics**, or **OCR-driven pipelines**.
 To ensure a structured and unbiased comparison, the evaluated models are grouped into three high-level architecture categories based on their **core design philosophy and input dependencies**.
