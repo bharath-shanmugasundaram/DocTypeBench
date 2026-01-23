@@ -4,8 +4,8 @@
 
 1. [**Comparative Analysis of Models for Document Type Classification**](#1-comparative-analysis-of-models-for-document-type-classification)
 2. [**Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
-3. [**Characteristics Analysis of Various Model**](#3-characteristics-analysis-of-various-model)
-4. [**Analysis of Various Architectural Model for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
+3. [**Characteristics Analysis of Various Models**](#3-characteristics-analysis-of-various-model)
+4. [**Analysis of Various Architectural Models for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
 5. [**Brief Analysis of Swin Transformer, DINOv3-7B, LayoutLM, PaddleOCR PP-Structure**](#5-brief-analysis-of-swin-transformer-dinov3-7b-layoutlm-paddleocr-pp-structure)
 6. [**Analysis Findings of Various Models**](#6-analysis-findings-of-various-models)
 7. [**Conculsion and Recommendation**](#7-conculsion-and-recommendation)
@@ -88,7 +88,7 @@ Therefore, a comparative evaluation across Swin Transformer, SOTA Vision Transfo
 
 ---
 
-## 3. Characteristics Analysis of Various Model  
+## 3. Characteristics Analysis of Various Models
 
 To ensure a fair and objective comparison across different model families, a unified set of evaluation criteria is defined. These criteria are designed to reflect both the **technical requirements of document type detection** and the **practical constraints of deploying such a system in production**.
 
@@ -167,7 +167,7 @@ This criterion ensures that selected models are not only accurate but also **eco
 
 ---
 
-## 4. Analysis of Various Architectural Model for Document Type Detection
+## 4. Analysis of Various Architectural Models for Document Type Detection
 
 Document type detection from scanned images can be approached using different architectural paradigms, each emphasizing a distinct source of information such as **visual layout**, **textual semantics**, or **OCR-driven pipelines**.
 To ensure a structured and unbiased comparison, the evaluated models are grouped into three high-level architecture categories based on their **core design philosophy and input dependencies**.
@@ -484,7 +484,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 
 ---
 
-### 7.2 Model Suitability Summary (Honest Assessment)
+### 7.2 Model Suitability Summary 
 
 * **Swin Transformer**
 
