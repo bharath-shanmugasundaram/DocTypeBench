@@ -8,7 +8,7 @@ The classification is primarily based on visual layout, structural patterns, and
 
 ---
 
-## 2. Why Multiple Model Families Are Evaluated
+## 2. Why Multiple Model Families Are Evolved for Document Type classification 
 
 Document Type Detection for scanned documents is a **non-trivial classification problem** due to the high variability in document appearance, structure, and content. Although the end goal is a single classification label per document page, the **signals required to make that decision differ significantly across document types**.
 
