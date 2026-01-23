@@ -246,15 +246,17 @@ OCR-centric pipelines offer flexibility and industrial maturity but come with in
 
 ---
 
-## 5. Swin Transformer – Brief Analysis
+## 5. Brief Analysis of Swin Transformer, DINOv3-7B, LayoutLM, PaddleOCR PP-Structure
 
-### 5.1 Overview
+### 5.1 Swin Transformer
+
+#### 5.1.1 Overview
 
 Swin Transformer is a **hierarchical Vision Transformer** that uses **shifted window attention** to capture both local and global visual patterns efficiently. Unlike standard ViT models, it is designed to better preserve **spatial structure**, making it suitable for document image analysis.
 
 ---
 
-### 5.2 Why Swin Transformer for Document Type Detection
+#### 5.1.2 Why Swin Transformer for Document Type Detection
 
 Document type detection in scanned images largely depends on **layout and structural cues** such as:
 
@@ -266,7 +268,7 @@ Swin Transformer can learn these patterns directly from images **without relying
 
 ---
 
-### 5.3 Strengths
+#### 5.1.3 Strengths
 
 * **OCR-free pipeline**, reducing complexity and error propagation
 * Strong understanding of **document layout and structure**
@@ -276,7 +278,7 @@ Swin Transformer can learn these patterns directly from images **without relying
 
 ---
 
-### 5.4 Limitations
+#### 5.1.4 Limitations
 
 * No understanding of **text semantics**
 * May struggle with documents that are **visually similar but semantically different**
@@ -284,15 +286,15 @@ Swin Transformer can learn these patterns directly from images **without relying
 
 ---
 
-## 6. SOTA Vision Transformers (DINOv3-7B) – Brief Analysis
+### 5.2. SOTA Vision Transformers (DINOv3-7B) – Brief Analysis
 
-### 6.1 Overview
+#### 5.2.1 Overview
 
 **DINOv3-7B** is a state-of-the-art, large-scale **self-supervised Vision Transformer** trained on massive image corpora. It learns highly rich and general-purpose visual representations using **global self-attention**, without requiring labeled data during pretraining.
 
 ---
 
-### 6.2 Why DINOv3-7B for Document Type Detection
+#### 5.2.2 Why DINOv3-7B for Document Type Detection
 
 DINOv3-7B can serve as a powerful **visual backbone** for document classification by capturing:
 
@@ -304,7 +306,7 @@ Its strong pretraining allows effective transfer to document images, even with *
 
 ---
 
-### 6.3 Strengths
+#### 5.2.3 Strengths
 
 * **Very strong visual feature representations**
 * OCR-free and simple input pipeline
@@ -314,7 +316,7 @@ Its strong pretraining allows effective transfer to document images, even with *
 
 ---
 
-### 6.4 Limitations
+#### 5.2.4 Limitations
 
 * **Very high compute and memory requirements** (7B parameters)
 * No explicit modeling of document layout hierarchy
@@ -324,15 +326,15 @@ Its strong pretraining allows effective transfer to document images, even with *
 
 ---
 
-## 7. LayoutLM Family – Brief Analysis
+### 5.3 LayoutLM Family – Brief Analysis
 
-### 7.1 Overview
+#### 5.3.1 Overview
 
 The **LayoutLM family (LayoutLM, LayoutLMv2, LayoutLMv3)** consists of **multimodal transformer models** designed specifically for document understanding tasks. These models jointly process **text tokens, spatial layout (bounding boxes), and visual features** to capture both document structure and semantic meaning.
 
 ---
 
-### 7.2 Why LayoutLM for Document Type Detection
+#### 5.3.2 Why LayoutLM for Document Type Detection
 
 LayoutLM is particularly relevant when document types are **visually similar but semantically different**. By combining OCR-extracted text with layout information, the model can distinguish documents based on **content semantics aligned with spatial structure**.
 
@@ -341,7 +343,7 @@ Text tokens obtained from OCR are **mandatory inputs**.
 
 ---
 
-### 7.3 Strengths
+#### 5.3.3 Strengths
 
 * Strong **joint understanding of text, layout, and visual context**
 * Effective for **semantically driven document classification**
@@ -350,7 +352,7 @@ Text tokens obtained from OCR are **mandatory inputs**.
 
 ---
 
-### 7.4 Limitations
+#### 5.3.4 Limitations
 
 * **Mandatory OCR dependency**, increasing pipeline complexity
 * Performance highly sensitive to **OCR quality**
@@ -360,19 +362,19 @@ Text tokens obtained from OCR are **mandatory inputs**.
 
 ---
 
-## 8. PaddleOCR PP-Structure – Document Analysis Pipeline
+### 5.4 PaddleOCR PP-Structure 
 
-### 8.1 Overview
+#### 5.4.1 Overview
 
 **PaddleOCR PP-Structure** is a comprehensive document intelligence system. For document type detection, it operates as a **feature extraction pipeline**, not a direct classifier. It processes document images to extract explicit structural and textual features, which are then used by a downstream machine learning model (such as an MLP) to perform the final classification.
 
-### 8.2 Why PP-Structure for Document Type Detection
+#### 5.4.2 Why PP-Structure for Document Type Detection
 
 This pipeline is highly relevant because it provides **explicit, rule-based access to document layout**. It directly identifies the structural components—titles, paragraphs, tables, form fields—that define document categories. This approach is powerful for types where layout is rigid and definitive.
 
 For example, a **Government Form** can be detected by a high density of small, aligned text blocks and checkbox regions; a **Bank Statement** is defined by the presence of a structured table with numerical columns. This pipeline excels at converting these visual patterns into countable, measurable features for a classifier.
 
-### 8.3 Strengths
+#### 5.4.3 Strengths
 
 *   **Explicit Layout Features:** Provides direct, interpretable data (counts and positions of tables, text blocks, etc.) that serve as strong inputs for a classifier like an MLP.
 *   Integrated High-Performance OCR:** The built-in OCR engine delivers accurate text from diverse document qualities, offering the option to combine textual semantics with layout features.
@@ -380,7 +382,7 @@ For example, a **Government Form** can be detected by a high density of small, a
 *   Multi-Task Foundation: The same extracted features can be used for other downstream tasks like Key Information Extraction (KIE) without reprocessing.
 
 
-### 8.5 Limitations
+#### 5.4.5 Limitations
 
 * **Multi-stage pipeline**, increasing system complexity
 * Strong dependency on OCR and layout model quality
