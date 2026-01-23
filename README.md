@@ -2,7 +2,7 @@
 
 # Table of Contents
 
-1. [**Comparative Analysis of Models for Document Type Classification**](#1-comparative-analysis-of-models-for-document-type-classification)
+1. [**Objective**](#1-Objective)
 2. [**Why Multiple Model Families Are Evolved for Document Type Classification ?**](#2-why-multiple-model-families-are-evolved-for-document-type-classification-)
 3. [**Characteristics Analysis of Various Models**](#3-characteristics-analysis-of-various-model)
 4. [**Analysis of Various Architectural Models for Document Type Detection**](#4-analysis-of-various-architectural-model-for-document-type-detection)
@@ -12,7 +12,7 @@
 
 ---
 
-## 1. Comparative Analysis of Models for Document Type Classification
+## 1. Objective
 
 The objective of this analysis is to design an Ai-based document type detection system that classifies scanned document pages into predefined document categories such as Invoice, Resume, Bank Statement, Insurance/Policy Document, and Government Forms.
 
