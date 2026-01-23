@@ -118,8 +118,7 @@
 
 ---
 
-## 1.5 SWOT Summary (Executive View)
-
+## 1.5 SWOT Summary
 | Model                | Overall Position               |
 | -------------------- | ------------------------------ |
 | **Swin Transformer** |  Best primary model           |
