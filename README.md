@@ -76,7 +76,7 @@ Therefore, a comparative evaluation across Swin Transformer, SOTA Vision Transfo
 
 ---
 
-## 3. Model Characteristics for Evaluation 
+## 3. Characteristics Analysis of Various Model  
 
 To ensure a fair and objective comparison across different model families, a unified set of evaluation criteria is defined. These criteria are designed to reflect both the **technical requirements of document type detection** and the **practical constraints of deploying such a system in production**.
 
@@ -155,7 +155,7 @@ This criterion ensures that selected models are not only accurate but also **eco
 
 ---
 
-## 4. Model Architecture Categories for Document Type Detection
+## 4. Analysis of Various Architectural Model for Document Type Detection
 
 Document type detection from scanned images can be approached using different architectural paradigms, each emphasizing a distinct source of information such as **visual layout**, **textual semantics**, or **OCR-driven pipelines**.
 To ensure a structured and unbiased comparison, the evaluated models are grouped into three high-level architecture categories based on their **core design philosophy and input dependencies**.
